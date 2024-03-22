@@ -14,5 +14,11 @@ namespace GradeBook.GradeBooks
             Name = name;
         }
 
+        public override char GetLetterGrade(double averageGrade)
+        {
+            return base.GetLetterGrade(averageGrade);
+            
+
+        }
     }
 }
