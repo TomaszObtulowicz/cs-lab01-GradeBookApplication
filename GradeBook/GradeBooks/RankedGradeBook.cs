@@ -40,5 +40,15 @@ namespace GradeBook.GradeBooks
             }
             else return 'F';
         }
+
+        public override void CalculateStatistics()
+        {
+            base.CalculateStatistics();
+            if (Students.Count > 5) 
+            {
+                Console.WriteLine("Raned grading requires at least 5 students.");
+            }
+
+        }
     }
 }
