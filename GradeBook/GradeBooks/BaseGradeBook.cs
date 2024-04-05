@@ -268,5 +268,10 @@ namespace GradeBook.GradeBooks
             
             return JsonConvert.DeserializeObject(json, gradebook);
         }
+
+/*        public virtual void CalculateStudentStatistics()
+        {
+            throw new NotImplementedException();
+        }*/
     }
 }
