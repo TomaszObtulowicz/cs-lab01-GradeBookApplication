@@ -36,24 +36,30 @@ namespace GradeBook.UserInterfaces
             
             var parts = command.Split(' ');
             
-            if (parts.Length != 3)
+            if (parts.Length != 4)
             {
-                Console.WriteLine("Command not valid, Create requires a name and type of gradebook.");              
+                Console.WriteLine($"Command not valid, Create requires a name, type of gradebook, if it's weighted (true / false).");
                 return;
             }
             var name = parts[1];
-            BaseGradeBook gradeBook = new BaseGradeBook(name);
+
+            bool weighted = false;
+            if (parts[3]=="true")
+            {
+                weighted = true;
+            }
+
+            BaseGradeBook gradeBook = new RankedGradeBook(name, weighted);
 
             switch (parts[2])
             {
                 case "ranked":
-                    gradeBook = new RankedGradeBook(name);
                     break;
                 case "standard":
-                    gradeBook = new StandardGradeBook(name);
+                    gradeBook = new StandardGradeBook(name, weighted);
                     break;
                 default:
-                    Console.WriteLine($"\"{parts[2]} is not a supported type of gradebook, please try again\"");
+                    Console.WriteLine($"\"{parts[2]} Command not valid, Create requires a name, type of gradebook, if it's weighted (true / false).");
                     return;
                 break;
             }
@@ -85,7 +91,7 @@ namespace GradeBook.UserInterfaces
             Console.WriteLine();
             Console.WriteLine("GradeBook accepts the following commands:");
             Console.WriteLine();
-            Console.WriteLine("Create 'Name' - Creates a new gradebook where 'Name' is the name of the gradebook.");
+            Console.WriteLine("Create 'Name' 'Type' 'Weighted' - Creates a new gradebook where 'Name' is the name of the gradebook, 'Type' is what type of grading it should use, and 'Weighted' is whether or not grades should be weighted (true or false).");
             Console.WriteLine();
             Console.WriteLine("Load 'Name' - Loads the gradebook with the provided 'Name'.");
             Console.WriteLine();

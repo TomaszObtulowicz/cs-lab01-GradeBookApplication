@@ -10,16 +10,20 @@ using Newtonsoft.Json.Linq;
 namespace GradeBook.GradeBooks
 {
     
-    public class BaseGradeBook
+    public abstract class BaseGradeBook
     {
         public GradeBookType Type { get; set; }
         public string Name { get; set; } 
+        public bool IsWeighted { get; set; }    
         public List<Student> Students { get; set; }
 
-        public BaseGradeBook(string name)
+        public BaseGradeBook(string name, bool IsWeight)
         {
+            
             Name = name;
+            IsWeighted = IsWeight;
             Students = new List<Student>();
+            
         }
 
         public void AddStudent(Student student)
@@ -108,20 +112,31 @@ namespace GradeBook.GradeBooks
 
         public virtual double GetGPA(char letterGrade, StudentType studentType)
         {
-            switch (letterGrade)
-            {
-                case 'A':
-                    return 4;
-                case 'B':
-                    return 3;
-                case 'C':
-                    return 2;
-                case 'D':
-                    return 1;
-                case 'F':
-                    return 0;
-            }
-            return 0;
+                double grade = 0;
+                switch (letterGrade)
+                {
+                    case 'A':
+                        grade = 4;
+                        break;
+                    case 'B':
+                        grade = 3;
+                        break;
+                    case 'C':
+                        grade = 2;
+                        break;
+                    case 'D':
+                        grade = 1;
+                        break;
+                    default:
+                        grade = 0;
+                        break;
+                }
+
+                if (IsWeighted&&(studentType == StudentType.Honors || studentType == StudentType.DualEnrolled))
+                    grade++;
+
+                return grade;
+            
         }
 
         public virtual void CalculateStatistics()
